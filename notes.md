@@ -1,8 +1,6 @@
 `show projectDependencies` shows root and aggregated projects
 
-`BuildStructure.units` contains all projects
-
-`projects` does:
+`projects` shows all projects, including out of root aggregate:
 
 ```scala
 val s: State
