@@ -1,0 +1,5 @@
+# sbt-project-graph
+
+  [sbt-project-graph]: https://github.com/dwijnand/sbt-project-graph
+
+[sbt-project-graph] is an sbt-plugin to helps visualise your inter-project dependency graph.
