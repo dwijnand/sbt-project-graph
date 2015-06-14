@@ -29,7 +29,11 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     val edges: Seq[(ResolvedProject, ResolvedProject)] = projectsNodes.flatMap(_.allEdges).distinct
 
-    IO.write(extracted.get(target) / "projects-graph.dot", Dot.toFileContent(projectsSeq, edges))
+    val projectsGraphDotFile = extracted.get(target) / "projects-graph.dot"
+
+    IO.write(projectsGraphDotFile, Dot.toFileContent(projectsSeq, edges))
+
+    extracted get sLog info s"Wrote project graph to '$projectsGraphDotFile'"
 
     s
   }
