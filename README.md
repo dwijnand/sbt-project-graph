@@ -1,6 +1,8 @@
 # [sbt-project-graph](https://github.com/dwijnand/sbt-project-graph)
 
-`sbt-project-graph` is an sbt plugin to helps visualise inter-project dependencies.
+  [sbt]: http://www.scala-sbt.org/
+
+`sbt-project-graph` is an [sbt] plugin to helps visualise inter-project dependencies.
 
 Inspired by [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-graph).
 
