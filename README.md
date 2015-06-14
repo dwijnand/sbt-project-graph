@@ -14,7 +14,7 @@ Inspired by [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-gr
 
 Therefore it is recommended to install it as a [global plugin][Global plugins] so that it's always available.
 
-To do so, add it to to `~/.sbt/0.13/plugins/plugins.sbt` (create if necessary) as such:
+To do so, add it to `~/.sbt/0.13/plugins/plugins.sbt` (create if necessary) as such:
 
     addSbtPlugin("com.dwijnand.sbtprojectgraph" % "sbt-project-graph" % "0.1.0")
 
