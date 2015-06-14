@@ -1,20 +1,36 @@
 package com.dwijnand.sbtprojectgraph
 
 import sbt._
+import sbt.Keys._
 
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
-  object autoImport {
+  override def buildSettings = Seq[Setting[_]](commands += projectsGraphDot)
 
+  val projectsGraphDot = Command.command("projectsGraphDot") { s =>
+    val extracted: Extracted = Project extract s
+
+    val currentBuildUri  : URI        = extracted.currentRef.build
+    val currentProjectId : String     = extracted.currentRef.project
+
+    val buildStructure          : BuildStructure            = extracted.structure
+    val projectUriToBuildUnits  : Map[URI, LoadedBuildUnit] = buildStructure.units
+    val currentProjectBuildUnit : LoadedBuildUnit           = projectUriToBuildUnits(currentBuildUri)
+
+    val projectsLookup: Map[String, ResolvedProject] = currentProjectBuildUnit.defined
+
+    val rootProject: ResolvedProject = projectsLookup(currentProjectId)
+
+    val projectsSeq: Seq[ResolvedProject] =
+      rootProject +: (projectsLookup.values filterNot rootProject.==).toVector
+
+    val projectsNodes: Seq[Node[ResolvedProject]] = projectsSeq map (p => Node.create(p, projectsLookup))
+
+    val edges: Seq[(ResolvedProject, ResolvedProject)] = projectsNodes.flatMap(_.allEdges).distinct
+
+    IO.write(extracted.get(target) / "projects-graph.dot", Dot.toFileContent(projectsSeq, edges))
+
+    s
   }
-  import autoImport._
-
-  override def globalSettings: Seq[Def.Setting[_]] = super.globalSettings
-
-  override def buildSettings: Seq[Def.Setting[_]] = super.buildSettings
-
-  override def projectSettings: Seq[Def.Setting[_]] = super.projectSettings
-
-  override def projectConfigurations: Seq[Configuration] = super.projectConfigurations
 }
