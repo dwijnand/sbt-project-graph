@@ -11,13 +11,11 @@ Inspired by [sbt-dependency-graph].
 
   [Global plugins]: http://www.scala-sbt.org/0.13/tutorial/Using-Plugins.html#Global+plugins
 
-Much like `sbt-dependency-graph`, `sbt-project-graph` is an informational plugin and isn't ever a requirement of
-any build.
+`sbt-project-graph` is an informational plugin and isn't ever a requirement of any build.
 
-As such it's convenient to install `sbt-project-graph` as a [global plugin][Global plugins] so that no project's
-setup needs to be modified (and `sbt` reloaded) in order to use `sbt-project-graph`.
+Therefore it is recommended to install it as a [global plugin][Global plugins] so that it's always available.
 
-Therefore, add the dependency to `~/.sbt/0.13/plugins/plugins.sbt` (create one if necessary):
+To do so, add it to to `~/.sbt/0.13/plugins/plugins.sbt` (create if necessary) as such:
 
     addSbtPlugin("com.dwijnand.sbtprojectgraph" % "sbt-project-graph" % "0.1.0")
 
@@ -27,7 +25,7 @@ As `sbt-project-graph` is an auto plugin that is all that is required.
 
   [DOT]: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
 
-* `projectsGraphDot`: Generates a [DOT] file (`target/projects-graph.dot`) with the projects graph.
+* `projectsGraphDot`: Generates `target/projects-graph.dot` with the projects graph. See [DOT].
 
 ## Licence
 
