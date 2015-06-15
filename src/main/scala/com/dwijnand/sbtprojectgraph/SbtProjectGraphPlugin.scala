@@ -13,12 +13,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
   override def globalSettings =
     inScope(Global)(Seq[Setting[_]](
-      projectGraphDot := {
-        val log = streams.value.log
-        log info s"projectGraphDot for Global"
-        log info s"Outputing to ${target.value}"
-        target.value
-      }
+      projectGraphDot := projectGraphDotImpl(Nil).value
     ))
 
   // TODO: Remove
@@ -26,13 +21,15 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
   override def projectSettings =
     Seq[Setting[_]](
-      projectGraphDot := {
-        val log = streams.value.log
-        log info s"projectGraphDot for ${thisProject.value.id}"
-        log info s"Outputing to ${target.value}"
-        target.value
-      }
+      projectGraphDot := Def.taskDyn(projectGraphDotImpl(Seq(thisProject.value))).value
     )
+
+  def projectGraphDotImpl(roots: Seq[ResolvedProject]) =
+    Def.task {
+      val log = streams.value.log
+      log info s"${roots.size} roots"
+      new File("/tmp/foo")
+    }
 
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
     val extracted: Extracted = Project extract s
