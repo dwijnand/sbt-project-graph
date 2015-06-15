@@ -2,7 +2,7 @@
 
   [sbt]: http://www.scala-sbt.org/
 
-`sbt-project-graph` is an [sbt] plugin to helps visualise inter-project dependencies.
+`sbt-project-graph` is an [sbt][] plugin to helps visualise inter-project dependencies.
 
 Inspired by [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-graph).
 
@@ -24,7 +24,7 @@ As `sbt-project-graph` is an auto plugin that is all that is required.
 
   [DOT]: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
 
-* `projectsGraphDot`: Creates `target/projects-graph.dot` with the project graph. See [DOT].
+* `projectsGraphDot`: Creates `target/projects-graph.dot` with the project graph. See [DOT][].
 
 ## Licence
 

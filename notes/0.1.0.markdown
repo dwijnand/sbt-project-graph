@@ -1,7 +1,8 @@
+
   [DOT]: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
 
 - Initial implementation.
-- Features `projectsGraphDot` which outputs a [DOT] file inside the target directory.
+- Features `projectsGraphDot` which outputs a [DOT][] file inside the target directory.
 - The project's dependency graph uses `ProjectDefinition.uses`, which includes both the projects aggregated over
   and the projects that are classpath dependencies.
 - Removes redundant direct dependencies that are also present transitively via another direct dependency. This
