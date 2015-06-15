@@ -24,7 +24,7 @@ As `sbt-project-graph` is an auto plugin that is all that is required.
 
   [DOT]: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
 
-* `projectsGraphDot`: Generates `target/projects-graph.dot` with the projects graph. See [DOT].
+* `projectsGraphDot`: Creates `target/projects-graph.dot` with the project graph. See [DOT].
 
 ## Licence
 
