@@ -6,7 +6,33 @@ import sbt.Keys._
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
+  object autoImport {
+    val projectGraphDot = taskKey[File]("Creates a DOT file with the project graph")
+  }
+  import autoImport._
+
+  override def globalSettings =
+    inScope(Global)(Seq[Setting[_]](
+      projectGraphDot := {
+        val log = streams.value.log
+        log info s"projectGraphDot for Global"
+        log info s"Outputing to ${target.value}"
+        target.value
+      }
+    ))
+
+  // TODO: Remove
   override def buildSettings = Seq[Setting[_]](commands += projectsGraphDot)
+
+  override def projectSettings =
+    Seq[Setting[_]](
+      projectGraphDot := {
+        val log = streams.value.log
+        log info s"projectGraphDot for ${thisProject.value.id}"
+        log info s"Outputing to ${target.value}"
+        target.value
+      }
+    )
 
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
     val extracted: Extracted = Project extract s
