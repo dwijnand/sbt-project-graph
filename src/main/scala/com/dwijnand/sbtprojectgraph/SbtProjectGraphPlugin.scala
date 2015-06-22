@@ -12,7 +12,6 @@ object SbtProjectGraphPlugin extends AutoPlugin {
     val extracted: Extracted = Project extract s
 
     val currentBuildUri  : URI        = extracted.currentRef.build
-    val currentProjectId : String     = extracted.currentRef.project
 
     val buildStructure   : BuildStructure            = extracted.structure
     val buildUnitsMap    : Map[URI, LoadedBuildUnit] = buildStructure.units
@@ -20,9 +19,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     val projectsMap: Map[String, ResolvedProject] = currentBuildUnit.defined
 
-    val rootProject: ResolvedProject = projectsMap(currentProjectId)
-
-    val projects: Seq[ResolvedProject] = rootProject +: (projectsMap.values filterNot rootProject.==).toVector
+    val projects: Seq[ResolvedProject] = projectsMap.values.toVector
 
     val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap))
 
