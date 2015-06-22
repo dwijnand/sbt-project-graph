@@ -1,0 +1,4 @@
+* badge/link to latest version on bintray
+* publish & badge/link to html source render thing (SXR?)
+* publish & badge/link Scaladoc
+* setup & badge/link Travis
