@@ -14,24 +14,23 @@ object SbtProjectGraphPlugin extends AutoPlugin {
     val currentBuildUri  : URI        = extracted.currentRef.build
     val currentProjectId : String     = extracted.currentRef.project
 
-    val buildStructure          : BuildStructure            = extracted.structure
-    val projectUriToBuildUnits  : Map[URI, LoadedBuildUnit] = buildStructure.units
-    val currentProjectBuildUnit : LoadedBuildUnit           = projectUriToBuildUnits(currentBuildUri)
+    val buildStructure   : BuildStructure            = extracted.structure
+    val buildUnitsMap    : Map[URI, LoadedBuildUnit] = buildStructure.units
+    val currentBuildUnit : LoadedBuildUnit           = buildUnitsMap(currentBuildUri)
 
-    val projectsLookup: Map[String, ResolvedProject] = currentProjectBuildUnit.defined
+    val projectsMap: Map[String, ResolvedProject] = currentBuildUnit.defined
 
-    val rootProject: ResolvedProject = projectsLookup(currentProjectId)
+    val rootProj: ResolvedProject = projectsMap(currentProjectId)
 
-    val projectsSeq: Seq[ResolvedProject] =
-      rootProject +: (projectsLookup.values filterNot rootProject.==).toVector
+    val projects: Seq[ResolvedProject] = rootProj +: (projectsMap.values filterNot rootProj.==).toVector
 
-    val projectsNodes: Seq[Node[ResolvedProject]] = projectsSeq map (p => Node.create(p, projectsLookup))
+    val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap))
 
     val edges: Seq[(ResolvedProject, ResolvedProject)] = projectsNodes.flatMap(_.allEdges).distinct
 
     val projectsGraphDotFile = extracted.get(target) / "projects-graph.dot"
 
-    IO.write(projectsGraphDotFile, Dot.toFileContent(projectsSeq, edges))
+    IO.write(projectsGraphDotFile, Dot.toFileContent(projects, edges))
 
     extracted get sLog info s"Wrote project graph to '$projectsGraphDotFile'"
 
