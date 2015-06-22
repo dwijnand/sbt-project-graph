@@ -13,10 +13,10 @@ object Node {
     val uniqDirectDeps : Set[Node[ResolvedProject]] = directDeps filterNot (d => transDeps(d.value))
 
     Node(
-      value = p,
+           value = p,
       directDeps = uniqDirectDeps,
-      allDeps = directDeps0 ++ transDeps,
-      allEdges = uniqDirectDeps.flatMap(_.allEdges) ++ uniqDirectDeps.map(d => p -> d.value)
+         allDeps = directDeps0 ++ transDeps,
+        allEdges = uniqDirectDeps.flatMap(_.allEdges) ++ uniqDirectDeps.map(d => p -> d.value)
     )
   }
 }

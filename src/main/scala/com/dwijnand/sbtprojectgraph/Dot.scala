@@ -18,8 +18,8 @@ object Dot {
          |        arrowtail="none"
          |    ]
          |$nodesContent
-          |$edgesContent
-          |}
+         |$edgesContent
+         |}
        """.stripMargin.trim
     content
   }
