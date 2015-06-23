@@ -3,7 +3,7 @@ package com.dwijnand.sbtprojectgraph
 import sbt.{ ProjectRef, ResolvedProject }
 
 /** A node in a dependency tree of elements of type `A`. */
-case class Node[A](value: A, directDeps: Set[Node[A]], allDeps: Set[A], allEdges: Set[(A, A)])
+final case class Node[A](value: A, directDeps: Set[Node[A]], allDeps: Set[A], allEdges: Set[(A, A)])
 
 object Node {
   def create(p: ResolvedProject, projects: Map[String, ResolvedProject]): Node[ResolvedProject] = {
