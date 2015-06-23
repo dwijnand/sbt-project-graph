@@ -5,6 +5,42 @@ organization := "com.dwijnand.sbtprojectgraph"
    sbtPlugin := true
  description := "An sbt plugin to help visualise inter-project dependencies"
 
+scalacOptions ++= Seq("-encoding", "utf8")
+scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
+scalacOptions  += "-language:higherKinds"
+scalacOptions  += "-language:implicitConversions"
+scalacOptions  += "-language:postfixOps"
+scalacOptions  += "-Xfuture"
+scalacOptions  += "-Yinline-warnings"
+scalacOptions  += "-Yno-adapted-args"
+scalacOptions  += "-Ywarn-dead-code"
+scalacOptions  += "-Ywarn-numeric-widen"
+scalacOptions  += "-Ywarn-value-discard"
+
+maxErrors := 5
+triggeredMessage := Watched.clearWhenTriggered
+
+wartremoverWarnings += Wart.Any                     // bans f-interpolator #158
+wartremoverWarnings += Wart.Any2StringAdd
+wartremoverWarnings += Wart.AsInstanceOf
+wartremoverWarnings += Wart.EitherProjectionPartial
+wartremoverWarnings += Wart.FinalCaseClass
+wartremoverWarnings += Wart.IsInstanceOf
+wartremoverWarnings += Wart.ListOps
+wartremoverWarnings += Wart.JavaConversions
+wartremoverWarnings += Wart.MutableDataStructures
+wartremoverWarnings += Wart.NonUnitStatements       // bans this.type #118
+wartremoverWarnings += Wart.Null
+wartremoverWarnings += Wart.OptionPartial
+wartremoverWarnings += Wart.Return
+wartremoverWarnings += Wart.TryPartial
+wartremoverWarnings += Wart.Var
+
+initialCommands in console += "\nimport com.dwijnand.sbtprojectgraph._"
+
+fork in run := true
+cancelable in Global := true
+
 GithubRelease.repo := s"dwijnand/${name.value}"
 
 val createGithubRelease =
@@ -32,3 +68,6 @@ releaseProcess := {
     createGithubRelease.value
   )
 }
+
+watchSources ++= (baseDirectory.value * "*.sbt").get
+watchSources ++= (baseDirectory.value / "project" * "*.scala").get

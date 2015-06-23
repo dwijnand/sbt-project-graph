@@ -6,7 +6,7 @@ import sbt.Keys._
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
-  override def buildSettings = Seq[Setting[_]](commands += projectsGraphDot)
+  override def buildSettings: Seq[Setting[_]] = Seq(commands += projectsGraphDot)
 
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
     val extracted: Extracted = Project extract s
