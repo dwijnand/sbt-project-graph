@@ -1,9 +1,14 @@
+lazy val `sbt-project-graph` = project in file(".")
+
 organization := "com.dwijnand.sbtprojectgraph"
-        name := "sbt-project-graph"
      version := "0.1.1-SNAPSHOT"
-    licenses := Seq(("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")))
+    licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
+   startYear := Some(2015)
    sbtPlugin := true
  description := "An sbt plugin to help visualise inter-project dependencies"
+
+       maxErrors := 5
+triggeredMessage := Watched.clearWhenTriggered
 
 scalacOptions ++= Seq("-encoding", "utf8")
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
@@ -16,9 +21,6 @@ scalacOptions  += "-Yno-adapted-args"
 scalacOptions  += "-Ywarn-dead-code"
 scalacOptions  += "-Ywarn-numeric-widen"
 scalacOptions  += "-Ywarn-value-discard"
-
-maxErrors := 5
-triggeredMessage := Watched.clearWhenTriggered
 
 wartremoverWarnings += Wart.Any                     // bans f-interpolator #158
 wartremoverWarnings += Wart.Any2StringAdd
@@ -38,7 +40,7 @@ wartremoverWarnings += Wart.Var
 
 initialCommands in console += "\nimport com.dwijnand.sbtprojectgraph._"
 
-fork in run := true
+         fork in run := true
 cancelable in Global := true
 
 GithubRelease.repo := s"dwijnand/${name.value}"
