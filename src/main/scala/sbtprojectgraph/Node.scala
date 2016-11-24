@@ -7,10 +7,10 @@ final case class Node[A](value: A, directDeps: Set[Node[A]], allDeps: Set[A], al
 
 object Node {
   def create(p: ResolvedProject, projects: Map[String, ResolvedProject]): Node[ResolvedProject] = {
-    val directDeps0    : Set[ResolvedProject]       = p.uses.toSet map ((p: ProjectRef) => projects(p.project))
-    val directDeps     : Set[Node[ResolvedProject]] = directDeps0 map (d => create(d, projects))
-    val transDeps      : Set[ResolvedProject]       = directDeps flatMap (_.allDeps)
-    val uniqDirectDeps : Set[Node[ResolvedProject]] = directDeps filterNot (d => transDeps(d.value))
+    val directDeps0:    Set[ResolvedProject]       = p.uses.toSet flatMap ((p: ProjectRef) => projects get p.project)
+    val directDeps:     Set[Node[ResolvedProject]] = directDeps0 map (d => create(d, projects))
+    val transDeps:      Set[ResolvedProject]       = directDeps flatMap (_.allDeps)
+    val uniqDirectDeps: Set[Node[ResolvedProject]] = directDeps filterNot (d => transDeps(d.value))
 
     Node(
            value = p,

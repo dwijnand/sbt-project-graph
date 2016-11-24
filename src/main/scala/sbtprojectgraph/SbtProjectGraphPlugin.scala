@@ -10,11 +10,11 @@ object SbtProjectGraphPlugin extends AutoPlugin {
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
     val extracted: Extracted = Project extract s
 
-    val currentBuildUri  : URI        = extracted.currentRef.build
+    val currentBuildUri: URI = extracted.currentRef.build
 
-    val buildStructure   : BuildStructure            = extracted.structure
-    val buildUnitsMap    : Map[URI, LoadedBuildUnit] = buildStructure.units
-    val currentBuildUnit : LoadedBuildUnit           = buildUnitsMap(currentBuildUri)
+    val buildStructure:   BuildStructure            = extracted.structure
+    val buildUnitsMap:    Map[URI, LoadedBuildUnit] = buildStructure.units
+    val currentBuildUnit: LoadedBuildUnit           = buildUnitsMap(currentBuildUri)
 
     val projectsMap: Map[String, ResolvedProject] = currentBuildUnit.defined
 
