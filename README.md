@@ -2,9 +2,8 @@
 
   [sbt-project-graph]: https://github.com/dwijnand/sbt-project-graph
   [Apache 2 badge]: http://img.shields.io/:license-Apache%202-red.svg
-  [sbt]: http://www.scala-sbt.org/
 
-`sbt-project-graph` is an [sbt][] plugin to help visualise inter-project dependencies.
+`sbt-project-graph` is an [sbt](http://www.scala-sbt.org/) plugin to help visualise inter-project dependencies.
 
 Inspired by [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-graph).
 

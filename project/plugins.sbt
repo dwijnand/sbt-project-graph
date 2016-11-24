@@ -1,7 +1,5 @@
-// For sbt-github-release
-resolvers += "Era7 maven releases" at "https://s3-eu-west-1.amazonaws.com/releases.era7.com"
-
-addSbtPlugin("org.brianmckenna"  % "sbt-wartremover"    % "0.13")
-addSbtPlugin("me.lessis"         % "bintray-sbt"        % "0.3.0")
-addSbtPlugin("ohnosequences"     % "sbt-github-release" % "0.3.0")
-addSbtPlugin("com.github.gseitz" % "sbt-release"        % "1.0.0")
+          addSbtPlugin("com.dwijnand"    % "sbt-dynver"      % "1.1.1")
+          addSbtPlugin("io.get-coursier" % "sbt-coursier"    % "1.0.0-M14")
+libraryDependencies += "org.scala-sbt" % "scripted-plugin" % sbtVersion.value
+          addSbtPlugin("com.typesafe"  % "sbt-mima-plugin" % "0.1.11")
+          addSbtPlugin("me.lessis"     % "bintray-sbt"     % "0.3.0")

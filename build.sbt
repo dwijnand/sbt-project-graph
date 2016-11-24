@@ -1,73 +1,41 @@
-organization := "com.dwijnand.sbtprojectgraph"
+val sbtprojectgraph = project in file(".")
+
+organization := "com.dwijnand"
         name := "sbt-project-graph"
-     version := "0.1.1-SNAPSHOT"
     licenses := Seq(("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")))
-   sbtPlugin := true
  description := "An sbt plugin to help visualise inter-project dependencies"
+  developers := List(Developer("dwijnand", "Dale Wijnand", "dale wijnand gmail com", url("https://dwijnand.com")))
+   startYear := Some(2015)
+    homepage := scmInfo.value map (_.browseUrl)
+     scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
+
+   sbtPlugin := true
+scalaVersion := "2.10.6"
+
+       maxErrors := 15
+triggeredMessage := Watched.clearWhenTriggered
 
 scalacOptions ++= Seq("-encoding", "utf8")
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
-scalacOptions  += "-language:higherKinds"
-scalacOptions  += "-language:implicitConversions"
-scalacOptions  += "-language:postfixOps"
 scalacOptions  += "-Xfuture"
-scalacOptions  += "-Yinline-warnings"
 scalacOptions  += "-Yno-adapted-args"
 scalacOptions  += "-Ywarn-dead-code"
 scalacOptions  += "-Ywarn-numeric-widen"
 scalacOptions  += "-Ywarn-value-discard"
 
-maxErrors := 5
-triggeredMessage := Watched.clearWhenTriggered
+             fork in Test := false
+      logBuffered in Test := false
+parallelExecution in Test := true
 
-wartremoverWarnings += Wart.Any                     // bans f-interpolator #158
-wartremoverWarnings += Wart.Any2StringAdd
-wartremoverWarnings += Wart.AsInstanceOf
-wartremoverWarnings += Wart.EitherProjectionPartial
-wartremoverWarnings += Wart.FinalCaseClass
-wartremoverWarnings += Wart.IsInstanceOf
-wartremoverWarnings += Wart.ListOps
-wartremoverWarnings += Wart.JavaConversions
-wartremoverWarnings += Wart.MutableDataStructures
-wartremoverWarnings += Wart.NonUnitStatements       // bans this.type #118
-wartremoverWarnings += Wart.Null
-wartremoverWarnings += Wart.OptionPartial
-wartremoverWarnings += Wart.Return
-wartremoverWarnings += Wart.TryPartial
-wartremoverWarnings += Wart.Var
+scriptedSettings
+scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
+scriptedBufferLog := true
 
-initialCommands in console += "\nimport com.dwijnand.sbtprojectgraph._"
+def toSbtPlugin(m: ModuleID) = Def.setting(
+  Defaults.sbtPluginExtra(m, (sbtBinaryVersion in update).value, (scalaBinaryVersion in update).value)
+)
+mimaPreviousArtifacts := Set.empty // Set(toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "1.0.0").value)
 
-fork in run := true
+TaskKey[Unit]("verify") := Def.sequential(test in Test, scripted.toTask(""), mimaReportBinaryIssues).value
+
 cancelable in Global := true
-
-GithubRelease.repo := s"dwijnand/${name.value}"
-
-val createGithubRelease =
-  Def setting
-    ReleaseStep(
-      check  = releaseStepTaskAggregated(checkGithubCredentials in thisProjectRef.value),
-      action = releaseStepTaskAggregated(       releaseOnGithub in thisProjectRef.value)
-    )
-
-releaseProcess := {
-  import ReleaseTransformations._
-
-  Seq[ReleaseStep](
-    checkSnapshotDependencies,
-    inquireVersions,
-    runClean,
-    runTest,
-    setReleaseVersion,
-    commitReleaseVersion,
-    tagRelease,
-    publishArtifacts,
-    setNextVersion,
-    commitNextVersion,
-    pushChanges,
-    createGithubRelease.value
-  )
-}
-
-watchSources ++= (baseDirectory.value * "*.sbt").get
-watchSources ++= (baseDirectory.value / "project" * "*.scala").get
