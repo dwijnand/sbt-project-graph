@@ -1,0 +1,14 @@
+digraph "projects-graph" {
+    graph[rankdir="LR"]
+    node [
+        shape="record"
+    ]
+    edge [
+        arrowtail="none"
+    ]
+    "foo"[label=<foo>]
+    "b"[label=<b>]
+    "a"[label=<a>]
+    "b" -> "a"
+    "foo" -> "b"
+}
