@@ -1,7 +1,7 @@
-# [sbt-project-graph][] [![Apache 2 badge][]](http://www.apache.org/licenses/LICENSE-2.0)
+# [sbt-project-graph][] [![travis-badge][]](https://travis-ci.org/dwijnand/sbt-project-graph)
 
-  [sbt-project-graph]: https://github.com/dwijnand/sbt-project-graph
-  [Apache 2 badge]: http://img.shields.io/:license-Apache%202-red.svg
+[sbt-project-graph]: https://github.com/dwijnand/sbt-project-graph
+[travis-badge]: https://travis-ci.org/dwijnand/sbt-project-graph.svg?branch=master
 
 `sbt-project-graph` is an [sbt](http://www.scala-sbt.org/) plugin to help visualise inter-project dependencies.
 
