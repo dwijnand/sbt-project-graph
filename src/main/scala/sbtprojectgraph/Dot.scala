@@ -1,4 +1,4 @@
-package com.dwijnand.sbtprojectgraph
+package sbtprojectgraph
 
 import sbt.ResolvedProject
 

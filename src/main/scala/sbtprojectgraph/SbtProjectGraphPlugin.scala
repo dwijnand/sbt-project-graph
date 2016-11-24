@@ -1,7 +1,6 @@
-package com.dwijnand.sbtprojectgraph
+package sbtprojectgraph
 
-import sbt._
-import sbt.Keys._
+import sbt._, Keys._
 
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
