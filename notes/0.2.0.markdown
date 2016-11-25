@@ -1,0 +1,12 @@
+### Changes with compatibility implications
+
+- Changed groupId to "com.dwijnand" and package name to "sbtprojectgraph". [#22][] by [@dwijnand][]
+
+### Bug Fixes
+
+- Fixes getting a NoSuchElementException when using ProjectReference. [#19][]/[#22][] by [@dwijnand][]
+
+  [#19]: https://github.com/dwijnand/sbt-project-graph/issues/19
+  [#22]: https://github.com/dwijnand/sbt-project-graph/pull/22
+
+  [@dwijnand]: https://github.com/dwijnand
