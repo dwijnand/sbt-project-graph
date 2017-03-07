@@ -17,7 +17,7 @@ Therefore it is recommended to install it as a [global plugin][Global plugins] s
 
 To do so, add it to `~/.sbt/0.13/plugins/plugins.sbt` (create if necessary) as such:
 
-    addSbtPlugin("com.dwijnand.sbtprojectgraph" % "sbt-project-graph" % "0.1.0")
+    addSbtPlugin("com.dwijnand" % "sbt-project-graph" % "0.2.0")
 
 As `sbt-project-graph` is an auto plugin that is all that is required.
 
