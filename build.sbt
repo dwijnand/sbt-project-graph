@@ -43,6 +43,6 @@ def toSbtPlugin(m: ModuleID) = Def.setting(
 )
 mimaPreviousArtifacts := Set.empty // Set(toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "1.0.0").value)
 
-TaskKey[Unit]("verify") := Def.sequential(test in Test, scripted.toTask(""), mimaReportBinaryIssues).value
+// TaskKey[Unit]("verify") := Def.sequential(test in Test, scripted.toTask(""), mimaReportBinaryIssues).value
 
 cancelable in Global := true
