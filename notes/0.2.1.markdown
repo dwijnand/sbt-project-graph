@@ -1,0 +1,6 @@
+# Enhancements
+
++ Cross-built for sbt 1. [#24][] by [@dwijnand][]
+
+[#24]: https://github.com/dwijnand/sbt-project-graph/pull/24
+[@dwijnand]: https://github.com/dwijnand
