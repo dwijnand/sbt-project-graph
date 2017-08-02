@@ -1,6 +1,7 @@
 package sbtprojectgraph
 
 import sbt._, Keys._
+import sbt.internal.{ BuildStructure, LoadedBuildUnit } // sbt/sbt#3296
 
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements

@@ -9,8 +9,15 @@ organization := "com.dwijnand"
     homepage := scmInfo.value map (_.browseUrl)
      scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
-   sbtPlugin := true
-scalaVersion := "2.10.6"
+       sbtPlugin           := true
+      sbtVersion in Global := "0.13.16" // must be Global, otherwise ^^ won't change anything
+crossSbtVersions           := List("0.13.16", "1.0.0-RC3")
+
+scalaVersion := (CrossVersion partialVersion (sbtVersion in pluginCrossBuild).value match {
+  case Some((0, 13)) => "2.10.6"
+  case Some((1, _))  => "2.12.3"
+  case _             => sys error s"Unhandled sbt version ${(sbtVersion in pluginCrossBuild).value}"
+})
 
        maxErrors := 15
 triggeredMessage := Watched.clearWhenTriggered
