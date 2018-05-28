@@ -10,9 +10,9 @@ digraph "projects-graph" {
     "c"[label=<c>]
     "b"[label=<b>]
     "a"[label=<a>]
-    "foo" -> "c" [style=dashed]
-    "foo" -> "b" [style=dashed]
     "foo" -> "a" [style=dashed]
     "c" -> "b" [style=solid]
     "b" -> "a" [style=solid]
+    "foo" -> "c" [style=dashed]
+    "foo" -> "b" [style=dashed]
 }

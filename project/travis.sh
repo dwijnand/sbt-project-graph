@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ "$TRAVIS_SBT_VERSION" == "0.13.x" ]]; then
+if [[ "$TRAVIS_SBT_VERSION" == 1* ]]; then
   SWITCH_SBT_VERSION=""
   SCRIPTED="scripted"
 else
