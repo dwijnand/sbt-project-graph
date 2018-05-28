@@ -23,7 +23,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap))
 
-    val edges: Seq[(ResolvedProject, ResolvedProject)] = projectsNodes.flatMap(_.allEdges).distinct
+    val edges: Seq[Edge[ResolvedProject]] = projectsNodes.flatMap(_.allEdges).distinct
 
     val projectsGraphDotFile = extracted.get(target) / "projects-graph.dot"
 

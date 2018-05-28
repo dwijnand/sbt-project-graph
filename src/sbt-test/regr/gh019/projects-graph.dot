@@ -8,5 +8,5 @@ digraph "projects-graph" {
     ]
     "foo"[label=<foo>]
     "a"[label=<a>]
-    "foo" -> "a"
+    "foo" -> "a" [style=solid]
 }
