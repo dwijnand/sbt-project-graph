@@ -1,4 +1,4 @@
-lazy val foo = project in file(".") dependsOn (a, b)
+lazy val foo = project in file(".") aggregate (a, b)
 
 val a = project
 val b = project dependsOn a
