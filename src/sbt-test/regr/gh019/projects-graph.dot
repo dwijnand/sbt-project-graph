@@ -6,7 +6,7 @@ digraph "projects-graph" {
     edge [
         arrowtail="none"
     ]
-    "foo"[label=<foo>]
     "a"[label=<a>]
+    "foo"[label=<foo>]
     "foo" -> "a" [style=solid]
 }
