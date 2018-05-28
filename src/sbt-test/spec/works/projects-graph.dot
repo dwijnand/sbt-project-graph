@@ -7,9 +7,12 @@ digraph "projects-graph" {
         arrowtail="none"
     ]
     "foo"[label=<foo>]
+    "c"[label=<c>]
     "b"[label=<b>]
     "a"[label=<a>]
-    "b" -> "a" [style=solid]
-    "foo" -> "a" [style=dashed]
+    "foo" -> "c" [style=dashed]
     "foo" -> "b" [style=dashed]
+    "foo" -> "a" [style=dashed]
+    "c" -> "b" [style=solid]
+    "b" -> "a" [style=solid]
 }

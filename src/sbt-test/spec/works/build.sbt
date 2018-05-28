@@ -1,7 +1,8 @@
-lazy val foo = project in file(".") aggregate (a, b)
+lazy val foo = project in file(".") aggregate (a, b, c)
 
 val a = project
 val b = project dependsOn a
+val c = project dependsOn b
 
 TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot")
 
