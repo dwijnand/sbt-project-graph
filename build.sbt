@@ -10,8 +10,8 @@ organization := "com.dwijnand"
      scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
        sbtPlugin           := true
-      sbtVersion in Global := "0.13.16" // must be Global, otherwise ^^ won't change anything
-crossSbtVersions           := List("0.13.16", "1.0.0-RC3")
+      sbtVersion in Global := "1.1.5" // must be Global, otherwise ^^ won't change anything
+crossSbtVersions           := List("1.1.5", "0.13.17")
 
 scalaVersion := (CrossVersion partialVersion (sbtVersion in pluginCrossBuild).value match {
   case Some((0, 13)) => "2.10.6"
@@ -40,7 +40,6 @@ libraryDependencies += Defaults.sbtPluginExtra(
       logBuffered in Test := false
 parallelExecution in Test := true
 
-scriptedSettings
 scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
 scriptedBufferLog := true
 
