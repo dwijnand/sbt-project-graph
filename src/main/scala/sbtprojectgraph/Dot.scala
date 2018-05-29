@@ -4,9 +4,14 @@ import sbt.ResolvedProject
 
 /** Utility for [[https://en.wikipedia.org/wiki/DOT_(graph_description_language) DOT]]. */
 object Dot {
-  def toFileContent(nodes: Seq[ResolvedProject], edges: Seq[(ResolvedProject, ResolvedProject)]): String = {
-    val nodesContent = nodes map (n => s"""    "${n.id}"[label=<${n.id}>]""") mkString "\n"
-    val edgesContent = edges map (e => s"""    "${e._1.id}" -> "${e._2.id}"""") mkString "\n"
+  private def edgeStyle(edge: Edge[_]): String = edge.kind match {
+    case EdgeKind.Solid => "[style=solid]"
+    case EdgeKind.Dashed => "[style=dashed]"
+  }
+
+  def toFileContent(nodes: Seq[ResolvedProject], edges: Seq[Edge[ResolvedProject]]): String = {
+    val nodesContent = nodes.map(n => s"""    "${n.id}"[label=<${n.id}>]""").sorted.mkString("\n")
+    val edgesContent = edges.map(e => s"""    "${e.from.id}" -> "${e.to.id}" ${edgeStyle(e)}""").sorted.mkString("\n")
     val content =
       s"""
          |digraph "projects-graph" {

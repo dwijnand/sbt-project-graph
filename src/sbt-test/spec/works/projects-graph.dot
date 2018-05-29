@@ -6,9 +6,13 @@ digraph "projects-graph" {
     edge [
         arrowtail="none"
     ]
-    "foo"[label=<foo>]
-    "b"[label=<b>]
     "a"[label=<a>]
-    "b" -> "a"
-    "foo" -> "b"
+    "b"[label=<b>]
+    "c"[label=<c>]
+    "foo"[label=<foo>]
+    "b" -> "a" [style=solid]
+    "c" -> "b" [style=solid]
+    "foo" -> "a" [style=dashed]
+    "foo" -> "b" [style=dashed]
+    "foo" -> "c" [style=dashed]
 }
