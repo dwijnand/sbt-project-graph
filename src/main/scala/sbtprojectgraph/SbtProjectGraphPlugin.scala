@@ -6,9 +6,29 @@ import sbt.internal.{ BuildStructure, LoadedBuildUnit } // sbt/sbt#3296
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
-  override def buildSettings: Seq[Setting[_]] = Seq(commands += projectsGraphDot)
+  override def buildSettings: Seq[Setting[_]] = Seq(
+    commands ++= Seq(
+      projectsGraphDot,
+      projectsGraphSvg
+    )
+  )
 
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
+    val (_, state) = executeProjectsGraphDot(s)
+    state
+  }
+
+  val projectsGraphSvg = Command.command("projectsGraphSvg") { s =>
+    val (dotFile, state) = executeProjectsGraphDot(s)
+    val extracted = Project extract state
+    val svgFile = extracted.get(target) / "projects-graph.svg"
+    val command = Seq("dot", "-o" + svgFile.getAbsolutePath, "-Tsvg", dotFile.getAbsolutePath)
+    sys.process.Process(command).!
+    extracted get sLog info s"Wrote project graph to '$svgFile'"
+    state
+  }
+
+  private[this] def executeProjectsGraphDot(s: State): (File, State) = {
     val extracted: Extracted = Project extract s
 
     val currentBuildUri: URI = extracted.currentRef.build
@@ -31,6 +51,6 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     extracted get sLog info s"Wrote project graph to '$projectsGraphDotFile'"
 
-    s
+    (projectsGraphDotFile, s)
   }
 }
