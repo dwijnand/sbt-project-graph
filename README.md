@@ -28,8 +28,10 @@ As `sbt-project-graph` is an auto plugin that is all that is required.
 ## Tasks
 
   [DOT]: https://en.wikipedia.org/wiki/DOT_(graph_description_language)
+  [graphviz]: https://www.graphviz.org
 
 * `projectsGraphDot`: Creates `target/projects-graph.dot` with the project graph. See [DOT][].
+* `projectsGraphSvg`: Creates `target/projects-graph.svg` with the project graph. Require [graphviz][].
 
 ## Licence
 

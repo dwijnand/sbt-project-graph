@@ -1,2 +1,4 @@
 > projectsGraphDot
 > check
+> projectsGraphSvg
+$ exists target/projects-graph.svg

@@ -8,6 +8,11 @@ branches:
     - master
     - /^v[0-9]/
 
+addons:
+  apt:
+    packages:
+    - graphviz
+
 env:
   global:
     - COURSIER_PROGRESS=0
