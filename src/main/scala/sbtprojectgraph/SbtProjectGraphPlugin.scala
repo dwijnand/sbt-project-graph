@@ -9,7 +9,8 @@ object SbtProjectGraphPlugin extends AutoPlugin {
   override def buildSettings: Seq[Setting[_]] = Seq(
     commands ++= Seq(
       projectsGraphDot,
-      projectsGraphSvg
+      projectsGraphSvg,
+      projectsGraphPng
     )
   )
 
@@ -18,13 +19,16 @@ object SbtProjectGraphPlugin extends AutoPlugin {
     state
   }
 
-  val projectsGraphSvg = Command.command("projectsGraphSvg") { s =>
+  val projectsGraphSvg = Command.command("projectsGraphSvg")(dotTo("svg"))
+  val projectsGraphPng = Command.command("projectsGraphPng")(dotTo("png"))
+
+  private[this] def dotTo(outputFormat: String)(s: State) = {
     val (dotFile, state) = executeProjectsGraphDot(s)
     val extracted = Project extract state
-    val svgFile = extracted.get(target) / "projects-graph.svg"
-    val command = Seq("dot", "-o" + svgFile.getAbsolutePath, "-Tsvg", dotFile.getAbsolutePath)
+    val outFile = extracted.get(target) / s"projects-graph.$outputFormat"
+    val command = Seq("dot", "-o" + outFile.getAbsolutePath, s"-T$outputFormat", dotFile.getAbsolutePath)
     sys.process.Process(command).!
-    extracted get sLog info s"Wrote project graph to '$svgFile'"
+    extracted get sLog info s"Wrote project graph to '$outFile'"
     state
   }
 
