@@ -31,7 +31,7 @@ scalacOptions  += "-Ywarn-numeric-widen"
 scalacOptions  += "-Ywarn-value-discard"
 
 libraryDependencies += Defaults.sbtPluginExtra(
-  "com.dwijnand" % "sbt-compat" % "1.0.0",
+  "com.dwijnand" % "sbt-compat" % "1.2.6",
   (sbtBinaryVersion in pluginCrossBuild).value,
   (scalaBinaryVersion in update).value
 )
