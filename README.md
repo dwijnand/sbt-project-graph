@@ -12,7 +12,7 @@ Inspired by [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-gr
 
 ## Setup
 
-  [Global plugins]: http://www.scala-sbt.org/0.13/tutorial/Using-Plugins.html#Global+plugins
+  [Global plugins]: https://www.scala-sbt.org/1.x/docs/Using-Plugins.html#Global+plugins
 
 `sbt-project-graph` is an informational plugin and isn't ever a requirement of any build.
 
