@@ -1,5 +1,5 @@
 language: scala
-jdk: oraclejdk8
+jdk: openjdk8
 script: project/travis.sh
 
 # Build only master and version tags - http://stackoverflow.com/a/31882307/463761
@@ -28,8 +28,8 @@ cache:
     - $HOME/.sbt
 
 before_cache:
-  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
-  - find $HOME/.sbt        -name "*.lock"               -print -delete
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt        -name "*.lock"               -delete
 
 notifications:
   email:
