@@ -9,7 +9,7 @@ organization := "com.dwijnand"
     homepage := scmInfo.value map (_.browseUrl)
      scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
-       sbtPlugin           := true
+enablePlugins(SbtPlugin)
       sbtVersion in Global := "1.0.0" // must be Global, otherwise ^^ won't change anything
 crossSbtVersions           := List("1.0.0", "0.13.16")
 
