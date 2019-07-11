@@ -44,9 +44,10 @@ scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.versio
 scriptedBufferLog := true
 
 def toSbtPlugin(m: ModuleID) = Def.setting(
-  Defaults.sbtPluginExtra(m, (sbtBinaryVersion in update).value, (scalaBinaryVersion in update).value)
+  Defaults.sbtPluginExtra(m, (sbtBinaryVersion in pluginCrossBuild).value, (scalaBinaryVersion in update).value)
 )
-mimaPreviousArtifacts := Set.empty // Set(toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "1.0.0").value)
+
+mimaPreviousArtifacts := Set(toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "0.4.0").value)
 
 // TaskKey[Unit]("verify") := Def.sequential(test in Test, scripted.toTask(""), mimaReportBinaryIssues).value
 
