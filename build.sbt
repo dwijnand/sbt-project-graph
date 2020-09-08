@@ -1,8 +1,7 @@
-val sbtprojectgraph = project in file(".")
+val sbtprojectgraph = project.in(file(".")).settings(name := "sbt-project-graph")
 
 organization := "com.dwijnand"
-        name := "sbt-project-graph"
-    licenses := Seq(("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")))
+    licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
  description := "An sbt plugin to help visualise inter-project dependencies"
   developers := List(Developer("dwijnand", "Dale Wijnand", "dale wijnand gmail com", url("https://dwijnand.com")))
    startYear := Some(2015)
@@ -10,14 +9,10 @@ organization := "com.dwijnand"
      scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
 enablePlugins(SbtPlugin)
-      sbtVersion in Global := "1.0.0" // must be Global, otherwise ^^ won't change anything
-crossSbtVersions           := List("1.0.0", "0.13.16")
+Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change anything
+    crossSbtVersions := List("1.0.0")
 
-scalaVersion := (CrossVersion partialVersion (sbtVersion in pluginCrossBuild).value match {
-  case Some((0, 13)) => "2.10.6"
-  case Some((1, _))  => "2.12.3"
-  case _             => sys error s"Unhandled sbt version ${(sbtVersion in pluginCrossBuild).value}"
-})
+scalaVersion := "2.12.12"
 
        maxErrors := 15
 triggeredMessage := Watched.clearWhenTriggered
@@ -32,23 +27,21 @@ scalacOptions  += "-Ywarn-value-discard"
 
 libraryDependencies += Defaults.sbtPluginExtra(
   "com.dwijnand" % "sbt-compat" % "1.2.6",
-  (sbtBinaryVersion in pluginCrossBuild).value,
-  (scalaBinaryVersion in update).value
+  (pluginCrossBuild / sbtBinaryVersion).value,
+  (update / scalaBinaryVersion).value
 )
 
-             fork in Test := false
-      logBuffered in Test := false
-parallelExecution in Test := true
+Test /              fork := false
+Test /       logBuffered := false
+Test / parallelExecution := true
 
 scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
 scriptedBufferLog := true
 
 def toSbtPlugin(m: ModuleID) = Def.setting(
-  Defaults.sbtPluginExtra(m, (sbtBinaryVersion in pluginCrossBuild).value, (scalaBinaryVersion in update).value)
+  Defaults.sbtPluginExtra(m, (pluginCrossBuild / sbtBinaryVersion).value, (update / scalaBinaryVersion).value)
 )
 
 mimaPreviousArtifacts := Set(toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "0.4.0").value)
 
-// TaskKey[Unit]("verify") := Def.sequential(test in Test, scripted.toTask(""), mimaReportBinaryIssues).value
-
-cancelable in Global := true
+Global / cancelable := true
