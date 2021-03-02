@@ -6,7 +6,7 @@
 [gitter]:              https://gitter.im/dwijnand/sbt-project-graph
 [gitter-badge]: https://badges.gitter.im/dwijnand/sbt-project-graph.svg
 
-`sbt-project-graph` is an [sbt](http://www.scala-sbt.org/) plugin to help visualise inter-project dependencies.
+`sbt-project-graph` is an [sbt](https://www.scala-sbt.org/) plugin to help visualise inter-project dependencies.
 
 Inspired by [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-graph).
 
