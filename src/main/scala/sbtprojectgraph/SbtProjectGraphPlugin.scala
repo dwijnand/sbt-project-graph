@@ -15,7 +15,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
   )
 
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
-    val (_, state) = executeProjectsGraphDot(s)
+    val (_, state) = executeProjectsGraphDot(s, includeTransitiveEdges = false)
     state
   }
 
@@ -23,7 +23,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
   val projectsGraphPng = Command.command("projectsGraphPng")(dotTo("png"))
 
   private[this] def dotTo(outputFormat: String)(s: State) = {
-    val (dotFile, state) = executeProjectsGraphDot(s)
+    val (dotFile, state) = executeProjectsGraphDot(s, includeTransitiveEdges = false)
     val extracted = Project extract state
     val outFile = extracted.get(target) / s"projects-graph.$outputFormat"
     val command = Seq("dot", "-o" + outFile.getAbsolutePath, s"-T$outputFormat", dotFile.getAbsolutePath)
@@ -32,7 +32,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
     state
   }
 
-  private[this] def executeProjectsGraphDot(s: State): (File, State) = {
+  private[this] def executeProjectsGraphDot(s: State, includeTransitiveEdges: Boolean): (File, State) = {
     val extracted: Extracted = Project extract s
 
     val currentBuildUri: URI = extracted.currentRef.build
@@ -45,7 +45,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     val projects: Seq[ResolvedProject] = projectsMap.values.toVector
 
-    val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap))
+    val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap, includeTransitiveEdges))
 
     val edges: Seq[Edge[ResolvedProject]] = projectsNodes.flatMap(_.allEdges).distinct
 
