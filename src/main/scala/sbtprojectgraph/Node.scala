@@ -10,9 +10,9 @@ object Node {
     val aggregates = p.aggregate.toSet[ProjectRef].flatMap(ref => projects.get(ref.project).map(Dependency.fromAggregate))
     val classpathDeps = p.dependencies.flatMap(dep => projects.get(dep.project.project).map(Dependency.fromDependsOn))
 
-    val directDeps0:    Set[Dependency[ResolvedProject]]       = aggregates ++ classpathDeps
-    val directDeps:     Set[Dependency[Node[ResolvedProject]]] = directDeps0 map (d => Dependency(create(d.target, projects, includeTransitiveEdges), d.kind))
-    val transDeps:      Set[Dependency[ResolvedProject]]       = directDeps flatMap (_.target.allDeps)
+    val directDeps0: Set[Dependency[ResolvedProject]]       = aggregates ++ classpathDeps
+    val directDeps:  Set[Dependency[Node[ResolvedProject]]] = directDeps0 map (d => Dependency(create(d.target, projects, includeTransitiveEdges), d.kind))
+    val transDeps:   Set[Dependency[ResolvedProject]]       = directDeps flatMap (_.target.allDeps)
 
     val depsUsedForEdges =
       if (includeTransitiveEdges) {
