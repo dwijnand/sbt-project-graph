@@ -47,7 +47,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
     val command = Seq("dot", "-o" + outFile.getAbsolutePath, s"-T$outputFormat", dotFile.getAbsolutePath)
     sys.process.Process(command).!
     extracted get sLog info s"Wrote project graph to '$outFile'"
-    state
+    s
   }
 
   private[this] def executeProjectsGraphDot(s: State, includeTransitiveEdges: Boolean): File = {
