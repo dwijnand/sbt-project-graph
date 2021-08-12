@@ -14,8 +14,7 @@ Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change any
 
 scalaVersion := "2.12.14"
 
-       maxErrors := 15
-triggeredMessage := Watched.clearWhenTriggered
+maxErrors := 15
 
 scalacOptions ++= Seq("-encoding", "utf8")
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")

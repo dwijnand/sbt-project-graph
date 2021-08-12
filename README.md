@@ -1,10 +1,4 @@
-# [sbt-project-graph][] [![travis-badge][]][travis] [![gitter-badge][]][gitter]
-
-[sbt-project-graph]:  https://github.com/dwijnand/sbt-project-graph
-[travis]:          https://travis-ci.org/dwijnand/sbt-project-graph
-[travis-badge]:    https://travis-ci.org/dwijnand/sbt-project-graph.svg?branch=master
-[gitter]:              https://gitter.im/dwijnand/sbt-project-graph
-[gitter-badge]: https://badges.gitter.im/dwijnand/sbt-project-graph.svg
+# sbt-project-graph
 
 `sbt-project-graph` is an [sbt](https://www.scala-sbt.org/) plugin to help visualise inter-project dependencies.
 
