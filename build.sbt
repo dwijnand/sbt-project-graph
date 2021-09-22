@@ -12,7 +12,7 @@ enablePlugins(SbtPlugin)
 Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change anything
     crossSbtVersions := List("1.0.0")
 
-scalaVersion := "2.12.14"
+scalaVersion := "2.12.15"
 
 maxErrors := 15
 
