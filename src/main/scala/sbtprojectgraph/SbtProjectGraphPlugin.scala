@@ -6,6 +6,14 @@ import sbt.internal.{ BuildStructure, LoadedBuildUnit } // sbt/sbt#3296
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
+  object autoImport {
+    lazy val projectsGraphIncludeTransitiveEdges = settingKey[Boolean](
+      "Should the dependency graph include transitive edges, default: false."
+    )
+  }
+
+  import autoImport._
+
   override def buildSettings: Seq[Setting[_]] = Seq(
     commands ++= Seq(
       projectsGraphDot,
@@ -14,25 +22,35 @@ object SbtProjectGraphPlugin extends AutoPlugin {
     )
   )
 
+  override def globalSettings: Seq[Def.Setting[_]] =
+    super.globalSettings ++ Seq(projectsGraphIncludeTransitiveEdges := false)
+
   val projectsGraphDot = Command.command("projectsGraphDot") { s =>
-    val (_, state) = executeProjectsGraphDot(s)
-    state
+    projectsGraphIncludeTransitiveEdges.map(executeProjectsGraphDot(s, _))
+    s
   }
 
-  val projectsGraphSvg = Command.command("projectsGraphSvg")(dotTo("svg"))
-  val projectsGraphPng = Command.command("projectsGraphPng")(dotTo("png"))
+  val projectsGraphSvg = Command.command("projectsGraphSvg") { s =>
+    projectsGraphIncludeTransitiveEdges.map(dotTo("svg", _)(s))
+    s
+  }
 
-  private[this] def dotTo(outputFormat: String)(s: State) = {
-    val (dotFile, state) = executeProjectsGraphDot(s)
-    val extracted = Project extract state
+  val projectsGraphPng = Command.command("projectsGraphPng") { s =>
+    projectsGraphIncludeTransitiveEdges.map(dotTo("png", _)(s))
+    s
+  }
+
+  private[this] def dotTo(outputFormat: String, includeTransitiveEdges: Boolean)(s: State) = {
+    val dotFile = executeProjectsGraphDot(s, includeTransitiveEdges)
+    val extracted = Project extract s
     val outFile = extracted.get(target) / s"projects-graph.$outputFormat"
     val command = Seq("dot", "-o" + outFile.getAbsolutePath, s"-T$outputFormat", dotFile.getAbsolutePath)
     sys.process.Process(command).!
     extracted get sLog info s"Wrote project graph to '$outFile'"
-    state
+    s
   }
 
-  private[this] def executeProjectsGraphDot(s: State): (File, State) = {
+  private[this] def executeProjectsGraphDot(s: State, includeTransitiveEdges: Boolean): File = {
     val extracted: Extracted = Project extract s
 
     val currentBuildUri: URI = extracted.currentRef.build
@@ -45,7 +63,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     val projects: Seq[ResolvedProject] = projectsMap.values.toVector
 
-    val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap))
+    val projectsNodes: Seq[Node[ResolvedProject]] = projects map (p => Node.create(p, projectsMap, includeTransitiveEdges))
 
     val edges: Seq[Edge[ResolvedProject]] = projectsNodes.flatMap(_.allEdges).distinct
 
@@ -55,6 +73,6 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     extracted get sLog info s"Wrote project graph to '$projectsGraphDotFile'"
 
-    (projectsGraphDotFile, s)
+    projectsGraphDotFile
   }
 }
