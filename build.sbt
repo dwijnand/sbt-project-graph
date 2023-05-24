@@ -12,7 +12,7 @@ enablePlugins(SbtPlugin)
 Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change anything
     crossSbtVersions := List("1.0.0")
 
-scalaVersion := "2.12.15"
+scalaVersion := "2.12.17"
 
 maxErrors := 15
 
@@ -34,7 +34,7 @@ Test /              fork := false
 Test /       logBuffered := false
 Test / parallelExecution := true
 
-scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
+scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
 scriptedBufferLog := true
 
 def toSbtPlugin(m: ModuleID) = Def.setting(
