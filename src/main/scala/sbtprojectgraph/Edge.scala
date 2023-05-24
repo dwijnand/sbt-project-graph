@@ -7,7 +7,7 @@ object EdgeKind {
   case object Dashed extends EdgeKind
 }
 
-final case class Edge[A](from: A, to: A, kind: EdgeKind)
+final case class Edge[A](from: A, to: A, kind: EdgeKind, extra: Option[String])
 
 object Edge {
   def fromDependency[A](from: A, to: Dependency[A]): Edge[A] = {
@@ -15,6 +15,6 @@ object Edge {
       case DependencyKind.DependsOn => EdgeKind.Solid
       case DependencyKind.Aggregate => EdgeKind.Dashed
     }
-    Edge(from = from, to = to.target, kind = kind)
+    Edge(from = from, to = to.target, kind = kind, extra = to.configuration)
   }
 }
