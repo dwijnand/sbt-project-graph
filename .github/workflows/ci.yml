@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: olafurpg/setup-scala@v13
+      - uses: olafurpg/setup-scala@v14
       - uses: coursier/cache-action@v6
       - run: sudo apt-get install graphviz
       - run: sbt test scripted mimaReportBinaryIssues
