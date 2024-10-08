@@ -26,7 +26,8 @@ jobs:
       - run: |
           case ${{ matrix.java }} in
             "8")
-              sbt scripted
+              # TODO https://github.com/dwijnand/sbt-project-graph/issues/145
+              sbt scripted "++ 3.x" compile
               ;;
             "21")
               sbt 'set Global / sbtVersion := "1.10.2"' scripted
