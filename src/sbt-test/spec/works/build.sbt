@@ -1,10 +1,10 @@
-lazy val foo = project in file(".") aggregate (a, b, c)
+lazy val foo = project.in(file(".")).aggregate(a, b, c).settings(
+  TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot")
+)
 
 val a = project
 val b = project dependsOn a
 val c = project dependsOn b
-
-TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot")
 
 def check(inc0: File, exp0: File) = {
   val inc = IO readLines inc0

@@ -9,12 +9,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [8, 21]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 8
+          java-version: ${{ matrix.java }}
           distribution: adopt
       - uses: coursier/cache-action@v6
       - run: sudo apt-get install graphviz
-      - run: sbt test scripted mimaReportBinaryIssues
+      - run: sbt test mimaReportBinaryIssues
+      - run: |
+          case ${{ matrix.java }} in
+            "8")
+              sbt scripted
+              ;;
+            "21")
+              sbt 'set Global / sbtVersion := "1.10.2"' scripted
+              ;;
+            *)
+              echo "unexpected version"
+              exit 1
+          esac

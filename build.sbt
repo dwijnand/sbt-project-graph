@@ -12,7 +12,7 @@ enablePlugins(SbtPlugin)
 Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change anything
     crossSbtVersions := List("1.0.0")
 
-scalaVersion := "2.12.19"
+scalaVersion := "2.12.20"
 
 maxErrors := 15
 
@@ -24,17 +24,11 @@ scalacOptions  += "-Ywarn-dead-code"
 scalacOptions  += "-Ywarn-numeric-widen"
 scalacOptions  += "-Ywarn-value-discard"
 
-libraryDependencies += Defaults.sbtPluginExtra(
-  "com.dwijnand" % "sbt-compat" % "1.2.6",
-  (pluginCrossBuild / sbtBinaryVersion).value,
-  (update / scalaBinaryVersion).value
-)
-
 Test /              fork := false
 Test /       logBuffered := false
 Test / parallelExecution := true
 
-scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
+scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
 scriptedBufferLog := true
 
 def toSbtPlugin(m: ModuleID) = Def.setting(
