@@ -12,7 +12,18 @@ enablePlugins(SbtPlugin)
 Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change anything
     crossSbtVersions := List("1.0.0")
 
+pluginCrossBuild / sbtVersion := {
+  scalaBinaryVersion.value match {
+    case "2.12" =>
+      (pluginCrossBuild / sbtVersion).value
+    case _ =>
+      "2.0.0-M2"
+  }
+}
+
 scalaVersion := "2.12.20"
+
+crossScalaVersions += "3.3.4"
 
 maxErrors := 15
 
