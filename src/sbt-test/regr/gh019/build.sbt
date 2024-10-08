@@ -1,8 +1,14 @@
-lazy val foo = project in file(".") dependsOn (a, ProjectRef(file("bar"), "bar"), RootProject(file("baz")))
+lazy val foo = project.in(file("."))
+  .dependsOn(
+    a,
+    ProjectRef(file("bar"), "bar"),
+    RootProject(file("baz"))
+  )
+  .settings(
+    TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot")
+  )
 
 val a = project
-
-TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot")
 
 def check(inc0: File, exp0: File) = {
   val inc = IO readLines inc0
