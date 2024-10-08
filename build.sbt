@@ -24,12 +24,6 @@ scalacOptions  += "-Ywarn-dead-code"
 scalacOptions  += "-Ywarn-numeric-widen"
 scalacOptions  += "-Ywarn-value-discard"
 
-libraryDependencies += Defaults.sbtPluginExtra(
-  "com.dwijnand" % "sbt-compat" % "1.2.6",
-  (pluginCrossBuild / sbtBinaryVersion).value,
-  (update / scalaBinaryVersion).value
-)
-
 Test /              fork := false
 Test /       logBuffered := false
 Test / parallelExecution := true
