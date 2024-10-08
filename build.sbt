@@ -23,6 +23,14 @@ scalacOptions  += "-Yno-adapted-args"
 scalacOptions  += "-Ywarn-dead-code"
 scalacOptions  += "-Ywarn-numeric-widen"
 scalacOptions  += "-Ywarn-value-discard"
+scalacOptions ++= {
+  scalaBinaryVersion.value match {
+    case "2.12" =>
+      Seq("-Xsource:3")
+    case _ =>
+      Nil
+  }
+}
 
 Test /              fork := false
 Test /       logBuffered := false
