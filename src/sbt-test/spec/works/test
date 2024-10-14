@@ -1,6 +1,6 @@
 > projectsGraphDot
 > check
 > projectsGraphSvg
-$ exists target/projects-graph.svg
+> checkSVG
 > projectsGraphPng
-$ exists target/projects-graph.png
+> checkPNG

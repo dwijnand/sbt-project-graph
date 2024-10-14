@@ -1,5 +1,13 @@
 lazy val foo = project.in(file(".")).aggregate(a, b, c).settings(
-  TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot")
+  TaskKey[Unit]("check") := check(target.value / "projects-graph.dot", baseDirectory.value / "projects-graph.dot"),
+  TaskKey[Unit]("checkSVG") := {
+    val svg = target.value / "projects-graph.svg"
+    assert(svg.isFile)
+  },
+  TaskKey[Unit]("checkPNG") := {
+    val png = target.value / "projects-graph.png"
+    assert(png.isFile)
+  },
 )
 
 val a = project
