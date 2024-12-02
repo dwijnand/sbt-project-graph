@@ -11,8 +11,8 @@ lazy val foo = project.in(file(".")).aggregate(a, b, c).settings(
 )
 
 val a = project
-val b = project dependsOn a
-val c = project dependsOn b
+val b = project.dependsOn(a % "test->test")
+val c = project.dependsOn(b % "compile->compile;test->test")
 
 def check(inc0: File, exp0: File) = {
   val inc = IO readLines inc0
