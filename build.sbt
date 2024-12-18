@@ -17,13 +17,13 @@ pluginCrossBuild / sbtVersion := {
     case "2.12" =>
       (pluginCrossBuild / sbtVersion).value
     case _ =>
-      "2.0.0-M2"
+      "2.0.0-M3"
   }
 }
 
 scalaVersion := "2.12.20"
 
-crossScalaVersions += "3.3.4"
+crossScalaVersions += "3.6.2"
 
 maxErrors := 15
 
