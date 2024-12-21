@@ -6,7 +6,7 @@ import sbt.internal.{ BuildStructure, LoadedBuildUnit } // sbt/sbt#3296
 object SbtProjectGraphPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
-  override def buildSettings: Seq[Setting[_]] = Seq(
+  override def buildSettings: Seq[Setting[?]] = Seq(
     commands ++= Seq(
       projectsGraphDot,
       projectsGraphSvg,
