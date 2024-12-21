@@ -4,7 +4,7 @@ import sbt.ResolvedProject
 
 /** Utility for [[https://en.wikipedia.org/wiki/DOT_(graph_description_language) DOT]]. */
 object Dot {
-  private def edgeStyle(edge: Edge[_]): String = edge.kind match {
+  private def edgeStyle(edge: Edge[?]): String = edge.kind match {
     case EdgeKind.Solid => "[style=solid]"
     case EdgeKind.Dashed => "[style=dashed]"
   }
