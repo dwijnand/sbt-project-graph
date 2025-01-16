@@ -21,7 +21,7 @@ pluginCrossBuild / sbtVersion := {
   }
 }
 
-scalaVersion := "2.12.20"
+scalaVersion := "2.13.16"
 
 crossScalaVersions += "3.6.2"
 
