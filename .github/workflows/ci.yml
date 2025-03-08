@@ -30,7 +30,7 @@ jobs:
               sbt scripted "++ 3.x" compile scriptedTestSbt2
               ;;
             "21")
-              sbt 'set Global / sbtVersion := "1.10.7"' scripted
+              sbt 'set Global / sbtVersion := "1.10.10"' scripted
               ;;
             *)
               echo "unexpected version"
