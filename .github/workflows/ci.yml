@@ -27,7 +27,7 @@ jobs:
       - run: |
           case ${{ matrix.java }} in
             "8")
-              sbt scripted "++ 3.x" compile scriptedTestSbt2
+              sbt "+ compile" "+ scripted"
               ;;
             "21")
               sbt 'set Global / sbtVersion := "1.10.10"' scripted
