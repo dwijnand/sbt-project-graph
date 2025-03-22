@@ -29,15 +29,17 @@ maxErrors := 15
 
 scalacOptions ++= Seq("-encoding", "utf8")
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
-scalacOptions  += "-Xfuture"
-scalacOptions  += "-Yno-adapted-args"
-scalacOptions  += "-Ywarn-dead-code"
-scalacOptions  += "-Ywarn-numeric-widen"
-scalacOptions  += "-Ywarn-value-discard"
 scalacOptions ++= {
   scalaBinaryVersion.value match {
     case "2.12" =>
-      Seq("-Xsource:3")
+      Seq(
+        "-Xsource:3",
+        "-Xfuture",
+        "-Yno-adapted-args",
+        "-Ywarn-dead-code",
+        "-Ywarn-numeric-widen",
+        "-Ywarn-value-discard"
+      )
     case _ =>
       Nil
   }
