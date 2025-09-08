@@ -9,8 +9,13 @@ organization := "com.dwijnand"
      scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
 enablePlugins(SbtPlugin)
-Global / sbtVersion  := "1.0.0" // must be Global, otherwise ^^ won't change anything
-    crossSbtVersions := List("1.0.0")
+Global / sbtVersion  := {  // must be Global, otherwise ^^ won't change anything
+  if (sys.env.isDefinedAt("GITHUB_ACTIONS") && scala.util.Properties.isJavaAtLeast("21")){
+    (Global / sbtVersion).value
+  } else {
+    "1.0.0"
+  }
+}
 
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {

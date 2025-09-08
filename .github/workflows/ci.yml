@@ -23,16 +23,5 @@ jobs:
       - uses: coursier/cache-action@v6
       - uses: sbt/setup-sbt@v1
       - run: sudo apt-get install graphviz
-      - run: sbt test mimaReportBinaryIssues
-      - run: |
-          case ${{ matrix.java }} in
-            "8")
-              sbt "+ compile" "+ scripted"
-              ;;
-            "21")
-              sbt 'set Global / sbtVersion := "1.11.5"' scripted
-              ;;
-            *)
-              echo "unexpected version"
-              exit 1
-          esac
+      - run: sbt "+ test" mimaReportBinaryIssues
+      - run: sbt "+ compile" "+ scripted"
