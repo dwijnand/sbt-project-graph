@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
-          distribution: adopt
+          distribution: zulu
       - uses: coursier/cache-action@v7
       - uses: sbt/setup-sbt@v1
       - run: sudo apt-get install graphviz
