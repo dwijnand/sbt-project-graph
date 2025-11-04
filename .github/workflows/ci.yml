@@ -13,13 +13,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [8, 21]
+        java: [8, 25]
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
-          distribution: adopt
+          distribution: zulu
       - uses: coursier/cache-action@v7
       - uses: sbt/setup-sbt@v1
       - run: sudo apt-get install graphviz
