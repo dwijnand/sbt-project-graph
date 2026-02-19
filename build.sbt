@@ -10,7 +10,7 @@ organization := "com.dwijnand"
 
 enablePlugins(SbtPlugin)
 Global / sbtVersion  := {  // must be Global, otherwise ^^ won't change anything
-  if (sys.env.isDefinedAt("GITHUB_ACTIONS") && scala.util.Properties.isJavaAtLeast("21")){
+  if (sys.env.isDefinedAt("GITHUB_ACTIONS") && scala.util.Properties.isJavaAtLeast("17")){
     (Global / sbtVersion).value
   } else {
     "1.0.0"
@@ -22,13 +22,13 @@ pluginCrossBuild / sbtVersion := {
     case "2.12" =>
       (pluginCrossBuild / sbtVersion).value
     case _ =>
-      "2.0.0-RC6"
+      "2.0.0-RC9"
   }
 }
 
 scalaVersion := "2.12.21"
 
-crossScalaVersions += "3.7.4"
+crossScalaVersions += "3.8.1"
 
 maxErrors := 15
 
@@ -38,6 +38,7 @@ scalacOptions ++= {
   scalaBinaryVersion.value match {
     case "2.12" =>
       Seq(
+        "-release:8",
         "-Xsource:3",
         "-Xfuture",
         "-Yno-adapted-args",
