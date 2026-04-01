@@ -28,7 +28,7 @@ pluginCrossBuild / sbtVersion := {
 
 scalaVersion := "2.12.21"
 
-crossScalaVersions += "3.8.2"
+crossScalaVersions += "3.8.3"
 
 maxErrors := 15
 
