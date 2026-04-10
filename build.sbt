@@ -1,5 +1,7 @@
 val sbtprojectgraph = project.in(file(".")).settings(name := "sbt-project-graph")
 
+def sbt2 = "2.0.0-RC11"
+
 organization := "com.dwijnand"
     licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
  description := "An sbt plugin to help visualise inter-project dependencies"
@@ -22,13 +24,13 @@ pluginCrossBuild / sbtVersion := {
     case "2.12" =>
       (pluginCrossBuild / sbtVersion).value
     case _ =>
-      "2.0.0-RC11"
+      sbt2
   }
 }
 
 scalaVersion := "2.12.21"
 
-crossScalaVersions += "3.8.2"
+crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt2)
 
 maxErrors := 15
 
