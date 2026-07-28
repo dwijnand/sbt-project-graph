@@ -35,11 +35,12 @@ crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(
 maxErrors := 15
 
 scalacOptions ++= Seq("-encoding", "utf8")
-scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Xlint")
+scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 scalacOptions ++= {
   scalaBinaryVersion.value match {
     case "2.12" =>
       Seq(
+        "-Xlint",
         "-release:8",
         "-Xsource:3",
         "-Xfuture",
