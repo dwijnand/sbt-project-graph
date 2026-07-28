@@ -22,18 +22,18 @@ object SbtProjectGraphPlugin extends AutoPlugin {
   val projectsGraphSvg = Command.command("projectsGraphSvg")(dotTo("svg"))
   val projectsGraphPng = Command.command("projectsGraphPng")(dotTo("png"))
 
-  private[this] def dotTo(outputFormat: String)(s: State) = {
+  private def dotTo(outputFormat: String)(s: State) = {
     val (dotFile, state) = executeProjectsGraphDot(s)
-    val extracted = Project extract state
+    val extracted = Project.extract(state)
     val outFile = extracted.get(target) / s"projects-graph.$outputFormat"
     val command = Seq("dot", "-o" + outFile.getAbsolutePath, s"-T$outputFormat", dotFile.getAbsolutePath)
     sys.process.Process(command).!
-    extracted get sLog info s"Wrote project graph to '$outFile'"
+    extracted.get(sLog).info(s"Wrote project graph to '$outFile'")
     state
   }
 
-  private[this] def executeProjectsGraphDot(s: State): (File, State) = {
-    val extracted: Extracted = Project extract s
+  private def executeProjectsGraphDot(s: State): (File, State) = {
+    val extracted: Extracted = Project.extract(s)
 
     val currentBuildUri: URI = extracted.currentRef.build
 
@@ -53,7 +53,7 @@ object SbtProjectGraphPlugin extends AutoPlugin {
 
     IO.write(projectsGraphDotFile, Dot.toFileContent(projects, edges))
 
-    extracted get sLog info s"Wrote project graph to '$projectsGraphDotFile'"
+    extracted.get(sLog).info(s"Wrote project graph to '$projectsGraphDotFile'")
 
     (projectsGraphDotFile, s)
   }
