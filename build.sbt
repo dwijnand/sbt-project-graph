@@ -1,14 +1,14 @@
 val sbtprojectgraph = project.in(file(".")).settings(name := "sbt-project-graph")
 
-def sbt2 = "2.0.0-RC11"
+def sbt1 = "1.12.14"
 
 organization := "com.dwijnand"
-    licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0"))
+    licenses := Seq("Apache-2.0" -> uri("https://www.apache.org/licenses/LICENSE-2.0"))
  description := "An sbt plugin to help visualise inter-project dependencies"
-  developers := List(Developer("dwijnand", "Dale Wijnand", "dale wijnand gmail com", url("https://dwijnand.com")))
+  developers := List(Developer("dwijnand", "Dale Wijnand", "dale wijnand gmail com", uri("https://dwijnand.com")))
    startYear := Some(2015)
     homepage := scmInfo.value map (_.browseUrl)
-     scmInfo := Some(ScmInfo(url("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
+     scmInfo := Some(ScmInfo(uri("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
 enablePlugins(SbtPlugin)
 Global / sbtVersion  := {  // must be Global, otherwise ^^ won't change anything
@@ -22,15 +22,15 @@ Global / sbtVersion  := {  // must be Global, otherwise ^^ won't change anything
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
+      sbt1
+    case "3" =>
       (pluginCrossBuild / sbtVersion).value
-    case _ =>
-      sbt2
   }
 }
 
-scalaVersion := "2.12.21"
+scalaVersion := scalaVersion.value
 
-crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt2)
+crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt1)
 
 maxErrors := 15
 
