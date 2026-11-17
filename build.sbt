@@ -1,6 +1,6 @@
 val sbtprojectgraph = project.in(file(".")).settings(name := "sbt-project-graph")
 
-def sbt1 = "1.12.14"
+def sbt1 = "1.13.1"
 
 organization := "com.dwijnand"
     licenses := Seq("Apache-2.0" -> uri("https://www.apache.org/licenses/LICENSE-2.0"))
