@@ -11,26 +11,18 @@ organization := "com.dwijnand"
      scmInfo := Some(ScmInfo(uri("https://github.com/dwijnand/sbt-project-graph"), "scm:git:git@github.com:dwijnand/sbt-project-graph.git"))
 
 enablePlugins(SbtPlugin)
-Global / sbtVersion  := {  // must be Global, otherwise ^^ won't change anything
-  if (sys.env.isDefinedAt("GITHUB_ACTIONS") && scala.util.Properties.isJavaAtLeast("17")){
-    (Global / sbtVersion).value
-  } else {
-    "1.0.0"
-  }
-}
-
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
       sbt1
     case "3" =>
-      (pluginCrossBuild / sbtVersion).value
+      "2.1.0"
   }
 }
 
-scalaVersion := scalaVersion.value
+scalaVersion := "3.9.0"
 
-crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt1)
+crossScalaVersions := Seq("3.9.0", "2.12.21")
 
 maxErrors := 15
 
@@ -65,6 +57,14 @@ def toSbtPlugin(m: ModuleID) = Def.setting(
   Defaults.sbtPluginExtra(m, (pluginCrossBuild / sbtBinaryVersion).value, (update / scalaBinaryVersion).value)
 )
 
-mimaPreviousArtifacts := Set(toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "0.4.0").value)
+resolvers += Resolver.uri(
+  "legacy sbt plugin releases",
+  uri("https://scala.jfrog.io/artifactory/api/download/sbt-plugin-releases")
+)(using Resolver.ivyStylePatterns)
+
+mimaPreviousArtifacts := {
+  val previous = toSbtPlugin("com.dwijnand" % "sbt-project-graph" % "0.4.0").value
+  if (scalaBinaryVersion.value == "2.12") Set(previous) else Set.empty
+}
 
 Global / cancelable := true
