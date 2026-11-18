@@ -1,6 +1,7 @@
 val sbtprojectgraph = project.in(file(".")).settings(name := "sbt-project-graph")
 
 def sbt1 = "1.13.1"
+def sbt2 = "2.1.0"
 
 organization := "com.dwijnand"
     licenses := Seq("Apache-2.0" -> uri("https://www.apache.org/licenses/LICENSE-2.0"))
@@ -24,13 +25,13 @@ pluginCrossBuild / sbtVersion := {
     case "2.12" =>
       sbt1
     case "3" =>
-      (pluginCrossBuild / sbtVersion).value
+      sbt2
   }
 }
 
-scalaVersion := scalaVersion.value
+scalaVersion := "3.9.0"
 
-crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt1)
+crossScalaVersions := Seq("3.9.0", "2.12.21")
 
 maxErrors := 15
 
